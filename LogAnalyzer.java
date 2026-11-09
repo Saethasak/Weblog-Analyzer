@@ -16,13 +16,14 @@ public class LogAnalyzer
     /**
      * Create an object to analyze hourly web accesses.
      */
-    public LogAnalyzer()
+    public LogAnalyzer(String filename)
     { 
         // Create the array object to hold the hourly
         // access counts.
         hourCounts = new int[HOURS_PER_DAY];
         // Create the reader to obtain the data.
-        reader = new LogfileReader();
+        reader = new LogfileReader(filename);
+
     }
 
     /**
@@ -45,16 +46,58 @@ public class LogAnalyzer
     public void printHourlyCounts()
     {
         System.out.println("Hr: Count");
-        for(int hour = 0; hour < hourCounts.length; hour++) {
+        int hour = 0;
+        while(hour<hourCounts.length) {
             System.out.println(hour + ": " + hourCounts[hour]);
+            hour++;
         }
     }
-    
+
     /**
      * Print the lines of data read by the LogfileReader
      */
     public void printData()
     {
         reader.printData();
+    }
+
+    /** * Return the number of accesses recorded in the log file. */ 
+    public int numberOfAccesses() { 
+        int total = 0;
+        // Add the value in each element of hourCounts to total. ...
+        for(int i=0; i < hourCounts.length; i++){
+            total += hourCounts[HOURS_PER_DAY];
+        }
+        return total; 
+    } 
+
+    private int quietestHour(){
+        int quietestHour = 0;
+        for(int i=0; i < hourCounts.length; i++){
+            if(hourCounts[i]<hourCounts[quietestHour]){
+                quietestHour = i;
+            }
+        }
+        return quietestHour;
+    }
+
+    private int busiestHour(){
+        int busiestHour = 0;
+        for(int i=0; i < hourCounts.length; i++){
+            if(hourCounts[i]>hourCounts[busiestHour]){
+                busiestHour = i;
+            }
+        }
+        return busiestHour;
+    }
+
+    private int twinBusyHour(){
+        int busiestHour=0;
+        for(int i = 1; i < hourCounts.length-1;i++){
+            if(hourCounts[i]+hourCounts[i+1]>hourCounts[busiestHour]+hourCounts[busiestHour+1]){
+                busiestHour=i;
+            }
+        }
+        return busiestHour;
     }
 }
