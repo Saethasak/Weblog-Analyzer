@@ -18,7 +18,7 @@ public class LogAnalyzer
      */
     public LogAnalyzer(String filename)
     { 
-        // Create the array object to hold the hourly
+        // Create the array object to hold the hourly #5 #7
         // access counts.
         hourCounts = new int[HOURS_PER_DAY];
         // Create the reader to obtain the data.
@@ -37,7 +37,7 @@ public class LogAnalyzer
             hourCounts[hour]++;
         }
     }
-
+    // #4
     /**
      * Print the hourly counts.
      * These should have been set with a prior
@@ -64,14 +64,14 @@ public class LogAnalyzer
     /** * Return the number of accesses recorded in the log file. */ 
     public int numberOfAccesses() { 
         int total = 0;
-        // Add the value in each element of hourCounts to total. ...
+        // Add the value in each element of hourCounts to total. ... #6
         for(int i=0; i < hourCounts.length; i++){
             total += hourCounts[HOURS_PER_DAY];
         }
         return total; 
     } 
-
-    private int quietestHour(){
+        // #9
+    public int quietestHour(){
         int quietestHour = 0;
         for(int i=0; i < hourCounts.length; i++){
             if(hourCounts[i]<hourCounts[quietestHour]){
@@ -80,8 +80,8 @@ public class LogAnalyzer
         }
         return quietestHour;
     }
-
-    private int busiestHour(){
+    // #8 #10
+    public int busiestHour(){
         int busiestHour = 0;
         for(int i=0; i < hourCounts.length; i++){
             if(hourCounts[i]>hourCounts[busiestHour]){
@@ -90,8 +90,8 @@ public class LogAnalyzer
         }
         return busiestHour;
     }
-
-    private int twinBusyHour(){
+    // #11
+    public int twinBusyHour(){
         int busiestHour=0;
         for(int i = 1; i < hourCounts.length-1;i++){
             if(hourCounts[i]+hourCounts[i+1]>hourCounts[busiestHour]+hourCounts[busiestHour+1]){
